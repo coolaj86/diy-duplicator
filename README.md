@@ -36,7 +36,7 @@ Linux with `mdadm` RAID support.
 
 [bynovel-10-usb]: http://www.amazon.com/Bynovel-Adapter-Connect-Charge-Device/dp/B004D2CJ14/ref=sr_1_fkmr0_3?ie=UTF8&qid=1299613211&sr=1-3-fkmr0
 
-[nu-10-usb]]: http://www.amazon.com/USB-2-0-Port-Power-Adapter/dp/B003EHA5G0/ref=sr_1_2?ie=UTF8&s=electronics&qid=1299613211&sr=1-2
+[nu-10-usb]: http://www.amazon.com/USB-2-0-Port-Power-Adapter/dp/B003EHA5G0/ref=sr_1_2?ie=UTF8&s=electronics&qid=1299613211&sr=1-2
 
 [newegg-atom]: http://www.newegg.com/Product/Product.aspx?Item=N82E16813121398
 
