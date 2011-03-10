@@ -1,0 +1,69 @@
+#!/usr/bin/env node
+(function () {
+  "use strict";
+
+  var util = require('util'),
+    raid = '/dev/md_dup',
+    master = 'e',
+    img = './master.img',
+    devices = "fghijklmnopqrstuvwxy".split('');
+
+  function cloneMaster() {
+    util.puts("## Clone Master to '" + img + "'");
+    util.puts('if [ ! -f "' + img + '" ]; then');
+    util.puts("  dd if=/dev/sd" + master + " of=" + img);
+    util.puts('fi');
+    util.puts('');
+  }
+
+  function duplicateImg() {
+    util.puts("## Duplicate Master '" + img + "' to slaves");
+    function eachImg(a) {
+      util.puts("dd if=" + img + " of=/dev/sd" + a);
+    }
+    devices.forEach(eachImg);
+    util.puts('');
+  }
+
+  function createRaid() {
+    util.puts("## Create RAID 1 device");
+    util.print("mdadm --create " + raid  + " --level=1 --raid-devices=" + devices.length);
+    devices.forEach(function (a) {
+      util.print(" \\\n  /dev/sd" + a);
+    });
+    util.puts('\n');
+  }
+
+  function cloneRaid() {
+    util.puts("## Clone from master");
+    util.puts("dd if=/dev/sd" + master + " of=" + raid + "\n");
+  }
+
+  function destroyRaid() {
+    util.puts("## Destroy RAID device");
+    util.print("mdadm --fail " + raid);
+    devices.forEach(function (a) {
+      util.print(" \\\n  /dev/sd" + a);
+    });
+    util.puts('\n');
+  }
+
+  function uniquify() {
+    util.puts("## Assign random MAC addresses");
+    devices.forEach(function (a) {
+      util.print("./mmc-uniquify /dev/sd" + a + "1\n");
+    });
+    util.puts('');
+  }
+
+  function end() {
+    util.puts("##");
+  }
+
+
+  cloneMaster();
+  // duplicateImg();
+  createRaid();
+  uniquify();
+  end();
+}());

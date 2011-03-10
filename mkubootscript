@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+set -u
+
+sed "s/MAC_ADDR/`random-mac`/g" bootscript.tpl > bootscript.cmd
+mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "bootscript" -d bootscript.cmd boot.scr

@@ -1,0 +1,16 @@
+#!/bin/bash
+set -u
+set -e
+
+DEV=${1}
+TMP=/tmp/sddup-`random-string`
+mkdir -p ${TMP}
+mount ${DEV} ${TMP}
+./mkubootscript >/dev/null
+cp boot.scr ${TMP}/
+sync
+rm boot.scr bootscript.cmd
+sync
+umount ${TMP}
+sync
+rmdir ${TMP}
